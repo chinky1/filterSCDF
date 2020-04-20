@@ -1,0 +1,49 @@
+plugins {
+	id 'org.springframework.boot' version '2.2.6.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id 'java'
+    id 'eclipse'
+	//id 'war'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+	developmentOnly
+	runtimeClasspath {
+		extendsFrom developmentOnly
+	}
+}
+
+repositories {
+    mavenCentral()
+   maven { url "https://repo.spring.io/snapshot" }
+   maven { url "https://repo.spring.io/milestone" }
+}
+
+dependencies {
+    compile('org.springframework.boot:spring-boot-starter-actuator')
+    implementation 'org.springframework.boot:spring-boot-starter'
+//  compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.cloud:spring-cloud-stream-binder-rabbit')
+  //compile('org.springframework.cloud.stream.app:spring-cloud-starter-stream-processor-filter')
+    compile('org.springframework.boot:spring-boot-configuration-processor')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    compileOnly("org.projectlombok:lombok")
+    annotationProcessor("org.projectlombok:lombok")
+}
+
+dependencyManagement {
+    imports {
+      //  mavenBom "org.springframework.cloud.stream.app:app-starters-core-dependencies:2.1.2.RELEASE"
+        mavenBom "org.springframework.cloud.stream.app:filter-app-dependencies:2.1.2.RELEASE"
+        mavenBom "org.springframework.cloud.stream.app:app-starters-core-dependencies:2.1.2.RELEASE"
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:Hoxton.SR3"
+    }
+} 
+
+test {
+	useJUnitPlatform()
+}
